@@ -1,0 +1,16 @@
+
+name: robot_fk_engine
+
+channels:
+  - conda-forge
+
+dependencies:
+  - python=3.10
+  - pip
+  - numpy
+  - scipy
+  - matplotlib
+  - pytest
+  - pip:
+      - mujuco
+      - meshcat

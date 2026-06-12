@@ -419,3 +419,11 @@ world pose of every link and end-effector
 ```
 
 This is the same core idea behind many robotics tools. MuJoCo, Drake, and Pinocchio provide much more powerful and optimized implementations, but the basic FK update logic can be understood and reproduced with a small amount of Python code.
+
+
+## To use
+
+We assign the environment.yml file inside the repo which helps to setup conda env name and all related packages.
+
+setup command:
+` conda env create -f environment.yml`

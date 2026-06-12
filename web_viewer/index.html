@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Simple URDF Viewer</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    #ui {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      padding: 12px;
+      border-radius: 8px;
+      z-index: 10;
+      width: 330px;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .section-title {
+      font-weight: bold;
+      font-size: 13px;
+      margin-top: 12px;
+      margin-bottom: 6px;
+      border-top: 1px solid #ddd;
+      padding-top: 8px;
+    }
+
+    .slider-row {
+      margin-bottom: 12px;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      margin-bottom: 4px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+    }
+
+    #status {
+      font-size: 12px;
+      color: #444;
+      margin-top: 8px;
+      margin-bottom: 10px;
+    }
+
+    .button-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+
+    button {
+      border: 1px solid #ccc;
+      background: #f6f6f6;
+      border-radius: 5px;
+      padding: 5px 8px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #e8e8e8;
+    }
+
+    button.active {
+      background: #0b72ff;
+      color: white;
+      border-color: #0b72ff;
+    }
+
+    .link-button,
+    .part-button {
+      width: 100%;
+      text-align: left;
+      margin-bottom: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .hint {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.35;
+    }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "three/examples/jsm/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/",
+      "urdf-loader": "https://cdn.jsdelivr.net/npm/urdf-loader@0.12.6/src/URDFLoader.js"
+    }
+  }
+  </script>
+</head>
+
+<body>
+  <div id="ui">
+
+    <div class="section-title">Joints</div>
+    <div id="joint-slider-list">
+      <div class="hint">Joint sliders will appear after URDF is loaded.</div>
+    </div>
+
+    <div id="status">Loading URDF...</div>
+
+    <div class="section-title">Display</div>
+    <div class="button-row">
+      <button id="show-all-btn">Show all</button>
+    </div>
+
+    <div class="section-title">Links</div>
+    <div id="link-list">
+      <div class="hint">Links will appear after URDF is loaded.</div>
+    </div>
+
+    <div class="section-title">Visual parts</div>
+    <div id="part-list">
+      <div class="hint">Visual parts will appear after URDF is loaded.</div>
+    </div>
+
+  </div>
+
+  <script type="module" src="./main.js?v=400"></script>
+</body>
+</html>

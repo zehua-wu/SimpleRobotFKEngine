@@ -1,0 +1,432 @@
+<?xml version="1.0"?>
+<robot name="tx60_like_6dof_arm">
+
+  <mujoco>
+    <compiler discardvisual="false"/>
+  </mujoco>
+
+  <!-- ===================== -->
+  <!-- Materials -->
+  <!-- ===================== -->
+
+  <material name="base_dark">
+    <color rgba="0.22 0.22 0.22 1.0"/>
+  </material>
+
+  <material name="metal">
+    <color rgba="0.55 0.55 0.55 1.0"/>
+  </material>
+
+  <material name="blue">
+    <color rgba="0.00 0.32 0.85 1.0"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="0.95 0.50 0.08 1.0"/>
+  </material>
+
+  <material name="red">
+    <color rgba="0.85 0.08 0.08 1.0"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0.00 0.70 0.30 1.0"/>
+  </material>
+
+
+  <!-- ===================== -->
+  <!-- base_link -->
+  <!-- Fixed base + joint1 center spindle -->
+  <!-- ===================== -->
+
+  <link name="base_link">
+
+    <visual name="base_plate">
+      <origin xyz="0 0 0.05" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.22" length="0.10"/>
+      </geometry>
+      <material name="base_dark"/>
+    </visual>
+
+    <visual name="base_column">
+      <origin xyz="0 0 0.20" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.10" length="0.30"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <visual name="joint1_fixed_spindle">
+      <origin xyz="0 0 0.36" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.055" length="0.18"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0.18" rpy="0 0 0"/>
+      <mass value="4.0"/>
+      <inertia ixx="0.04" ixy="0" ixz="0"
+               iyy="0.04" iyz="0"
+               izz="0.04"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link1 -->
+  <!-- Rotating base yaw sleeve + shoulder housing -->
+  <!-- ===================== -->
+
+  <link name="link1">
+
+    <visual name="joint1_rotating_sleeve">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.135" length="0.14"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <visual name="shoulder_body">
+      <origin xyz="0 0 0.13" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.22 0.18 0.22"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <!-- Parent-side housing of joint2. Cylinder axis is along y. -->
+    <visual name="joint2_outer_housing">
+      <origin xyz="0 0 0.26" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.105" length="0.30"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0.12" rpy="0 0 0"/>
+      <mass value="2.0"/>
+      <inertia ixx="0.02" ixy="0" ixz="0"
+               iyy="0.02" iyz="0"
+               izz="0.02"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link2 -->
+  <!-- Upper arm link -->
+  <!-- Frame is at joint2 center -->
+  <!-- ===================== -->
+
+  <link name="link2">
+
+    <!-- Child-side rotating axis of joint2. Cylinder axis is along y. -->
+    <visual name="joint2_inner_axis">
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.075" length="0.34"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <!-- Upper arm beam extends along +x. -->
+    <visual name="upper_arm_beam">
+      <origin xyz="0.25 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.50 0.09 0.09"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <!-- Parent-side elbow housing for joint3. Cylinder axis is along y. -->
+    <visual name="joint3_outer_housing">
+      <origin xyz="0.50 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.10" length="0.28"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0.25 0 0" rpy="0 0 0"/>
+      <mass value="1.6"/>
+      <inertia ixx="0.01" ixy="0" ixz="0"
+               iyy="0.08" iyz="0"
+               izz="0.08"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link3 -->
+  <!-- Forearm link -->
+  <!-- Frame is at joint3 center -->
+  <!-- ===================== -->
+
+  <link name="link3">
+
+    <!-- Child-side rotating axis of joint3. Cylinder axis is along y. -->
+    <visual name="joint3_inner_axis">
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.070" length="0.30"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <!-- Forearm beam. Slightly raised in z to look more mechanical. -->
+    <visual name="forearm_beam">
+      <origin xyz="0.22 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.44 0.075 0.075"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <!-- Wrist-1 housing for joint4. Cylinder axis is along x. -->
+    <visual name="joint4_outer_housing">
+      <origin xyz="0.44 0 0.02" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.075" length="0.18"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0.22 0 0.02" rpy="0 0 0"/>
+      <mass value="1.2"/>
+      <inertia ixx="0.008" ixy="0" ixz="0"
+               iyy="0.05" iyz="0"
+               izz="0.05"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link4 -->
+  <!-- Wrist roll link -->
+  <!-- Frame is at joint4 center -->
+  <!-- ===================== -->
+
+  <link name="link4">
+
+    <!-- Child-side rotating barrel for joint4. Axis is x. -->
+    <visual name="joint4_roll_barrel">
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.060" length="0.22"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <visual name="wrist_link_a">
+      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.16 0.065 0.065"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <!-- Parent-side housing for joint5. Axis is y. -->
+    <visual name="joint5_outer_housing">
+      <origin xyz="0.16 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.065" length="0.20"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <mass value="0.6"/>
+      <inertia ixx="0.004" ixy="0" ixz="0"
+               iyy="0.004" iyz="0"
+               izz="0.004"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link5 -->
+  <!-- Wrist pitch link -->
+  <!-- Frame is at joint5 center -->
+  <!-- ===================== -->
+
+  <link name="link5">
+
+    <!-- Child-side rotating axis for joint5. Axis is y. -->
+    <visual name="joint5_inner_axis">
+      <origin xyz="0 0 0" rpy="1.5708 0 0"/>
+      <geometry>
+        <cylinder radius="0.055" length="0.22"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <visual name="wrist_link_b">
+      <origin xyz="0.06 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.12 0.055 0.055"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <!-- Parent-side housing for joint6. Axis is x. -->
+    <visual name="joint6_outer_housing">
+      <origin xyz="0.12 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.055" length="0.18"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0.06 0 0" rpy="0 0 0"/>
+      <mass value="0.4"/>
+      <inertia ixx="0.002" ixy="0" ixz="0"
+               iyy="0.002" iyz="0"
+               izz="0.002"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link6 -->
+  <!-- Final wrist roll / tool flange -->
+  <!-- Frame is at joint6 center -->
+  <!-- ===================== -->
+
+  <link name="link6">
+
+    <!-- Child-side rotating barrel for joint6. Axis is x. -->
+    <visual name="joint6_roll_barrel">
+      <origin xyz="0 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.050" length="0.20"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <!-- Tool flange. Axis is x. -->
+    <visual name="tool_flange">
+      <origin xyz="0.11 0 0" rpy="0 1.5708 0"/>
+      <geometry>
+        <cylinder radius="0.075" length="0.045"/>
+      </geometry>
+      <material name="metal"/>
+    </visual>
+
+    <visual name="tool_stub">
+      <origin xyz="0.17 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.10 0.04 0.04"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0.08 0 0" rpy="0 0 0"/>
+      <mass value="0.3"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.001" iyz="0"
+               izz="0.001"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- end_effector -->
+  <!-- Green marker at the final tool point -->
+  <!-- ===================== -->
+
+  <link name="end_effector">
+
+    <visual name="ee_marker">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.045"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.05"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0"
+               iyy="0.00001" iyz="0"
+               izz="0.00001"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- Joints -->
+  <!-- ===================== -->
+
+  <!-- joint1: base yaw, z-axis -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0.36" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="40" velocity="2.0"/>
+  </joint>
+
+  <!-- joint2: shoulder pitch, y-axis -->
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0 0 0.26" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.2" upper="2.2" effort="40" velocity="2.0"/>
+  </joint>
+
+  <!-- joint3: elbow pitch, y-axis -->
+  <joint name="joint3" type="revolute">
+    <parent link="link2"/>
+    <child link="link3"/>
+    <origin xyz="0.50 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.5" upper="2.5" effort="30" velocity="2.0"/>
+  </joint>
+
+  <!-- joint4: wrist roll, x-axis -->
+  <joint name="joint4" type="revolute">
+    <parent link="link3"/>
+    <child link="link4"/>
+    <origin xyz="0.44 0 0.02" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="20" velocity="3.0"/>
+  </joint>
+
+  <!-- joint5: wrist pitch, y-axis -->
+  <joint name="joint5" type="revolute">
+    <parent link="link4"/>
+    <child link="link5"/>
+    <origin xyz="0.16 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-2.2" upper="2.2" effort="20" velocity="3.0"/>
+  </joint>
+
+  <!-- joint6: final wrist roll, x-axis -->
+  <joint name="joint6" type="revolute">
+    <parent link="link5"/>
+    <child link="link6"/>
+    <origin xyz="0.12 0 0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="4.0"/>
+  </joint>
+
+  <!-- fixed tool center point -->
+  <joint name="ee_fixed_joint" type="fixed">
+    <parent link="link6"/>
+    <child link="end_effector"/>
+    <origin xyz="0.22 0 0" rpy="0 0 0"/>
+  </joint>
+
+</robot>

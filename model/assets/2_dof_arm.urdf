@@ -1,0 +1,279 @@
+<?xml version="1.0"?>
+<robot name="raised_two_dof_arm_mech_style">
+
+
+
+  <!-- ===================== -->
+  <!-- Materials(define color) -->
+  <!-- ===================== -->
+
+  <material name="gold">
+    <color rgba="0.75 0.55 0.10 1.0"/>  <!-- red, green, blue and alpha(opacity) -->
+  </material>
+
+  <material name="dark_gray">
+    <color rgba="0.28 0.28 0.28 1.0"/>
+  </material>
+
+  <material name="blue">
+    <color rgba="0.00 0.38 0.82 1.0"/>
+  </material>
+
+  <material name="orange">
+    <color rgba="0.78 0.55 0.16 1.0"/>
+  </material>
+
+  <material name="red">
+    <color rgba="0.82 0.15 0.15 1.0"/>
+  </material>
+
+  <material name="green">
+    <color rgba="0.00 0.70 0.38 1.0"/>
+  </material>
+
+
+  <!-- ===================== -->
+  <!-- base_link -->
+  <!-- Fixed base + center spindle for joint1 -->
+  <!-- ===================== -->
+
+  <link name="base_link">
+
+    <!-- Bottom base plate -->
+    <visual name="base_plate">
+      <origin xyz="0 0 0.06" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.22" length="0.12"/>
+      </geometry>
+      <material name="gold"/>
+    </visual>
+
+    <!-- Vertical support column -->
+    <visual name="support_column">
+      <origin xyz="0 0 0.38" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.075" length="0.64"/>
+      </geometry>
+      <material name="gold"/>
+    </visual>
+
+    <!-- Fixed central spindle for joint1 -->
+    <visual name="joint1_center_spindle">
+      <origin xyz="0 0 0.76" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.050" length="0.22"/>
+      </geometry>
+      <material name="gold"/>
+    </visual>
+
+    <!-- Lower flange at joint1 -->
+    <visual name="joint1_lower_flange">
+      <origin xyz="0 0 0.69" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.11" length="0.04"/>
+      </geometry>
+      <material name="gold"/>
+    </visual>
+
+    <collision name="base_collision">
+      <origin xyz="0 0 0.38" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.10" length="0.76"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0 0 0.35" rpy="0 0 0"/>
+      <mass value="3.0"/>
+      <inertia ixx="0.02" ixy="0" ixz="0"
+               iyy="0.02" iyz="0"
+               izz="0.02"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link1 -->
+  <!-- Rotating outer sleeve around joint1 spindle + first beam -->
+  <!-- ===================== -->
+
+  <link name="link1">
+
+    <!-- Rotating outer sleeve around joint1 -->
+    <visual name="joint1_outer_sleeve">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.12" length="0.16"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <!-- Decorative ring on joint1 -->
+    <visual name="joint1_ring">
+      <origin xyz="0 0 -0.07" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.13" length="0.03"/>
+      </geometry>
+      <material name="gold"/>
+    </visual>
+
+    <!-- Link1 beam extends horizontally from joint1 -->
+    <visual name="link1_beam">
+      <origin xyz="0.40 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.80 0.08 0.08"/>
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <!-- Joint2 outer housing belongs to link1, the parent side -->
+    <visual name="joint2_outer_housing">
+      <origin xyz="0.80 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.11" length="0.16"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+
+    <!-- Top flange of joint2 housing -->
+    <visual name="joint2_outer_flange">
+      <origin xyz="0.80 0 0.10" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.13" length="0.03"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+
+    <collision name="link1_collision">
+      <origin xyz="0.40 0 0.02" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.80 0.08 0.08"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0.40 0 0" rpy="0 0 0"/>
+      <mass value="1.1"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.08" iyz="0"
+               izz="0.08"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- link2 -->
+  <!-- Rotating center column at joint2 + second beam -->
+  <!-- ===================== -->
+
+  <link name="link2">
+
+    <!-- Rotating inner spindle / column for joint2 -->
+    <visual name="joint2_inner_spindle">
+      <origin xyz="0 0 0.06" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.05" length="0.26"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <!-- Upper rotating collar where link2 begins -->
+    <visual name="joint2_upper_collar">
+      <origin xyz="0 0 0.14" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.11" length="0.03"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <!-- Link2 beam starts from a slightly higher z level -->
+    <visual name="link2_beam">
+      <origin xyz="0.34 0 0.14" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.68 0.075 0.075"/>
+      </geometry>
+      <material name="orange"/>
+    </visual>
+
+    <!-- Wrist cap at the end of link2 -->
+    <visual name="wrist_cap">
+      <origin xyz="0.70 0 0.14" rpy="0 0 0"/>
+      <geometry>
+        <cylinder radius="0.065" length="0.10"/>
+      </geometry>
+      <material name="dark_gray"/>
+    </visual>
+
+    <collision name="link2_collision">
+      <origin xyz="0.34 0 0.14" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.68 0.075 0.075"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <origin xyz="0.34 0 0.10" rpy="0 0 0"/>
+      <mass value="0.85"/>
+      <inertia ixx="0.001" ixy="0" ixz="0"
+               iyy="0.05" iyz="0"
+               izz="0.05"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- end_effector -->
+  <!-- Green marker at the tip of link2 -->
+  <!-- ===================== -->
+
+  <link name="end_effector">
+    <visual name="ee_marker">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.06"/>
+      </geometry>
+      <material name="green"/>
+    </visual>
+
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.05"/>
+      <inertia ixx="0.00001" ixy="0" ixz="0"
+               iyy="0.00001" iyz="0"
+               izz="0.00001"/>
+    </inertial>
+  </link>
+
+
+  <!-- ===================== -->
+  <!-- joints -->
+  <!-- ===================== -->
+
+  <!-- joint1: base_link -> link1 -->
+  <!-- Rotation around the fixed center spindle -->
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0 0 0.76" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="20" velocity="2.0"/>
+  </joint>
+
+  <!-- joint2: link1 -> link2 -->
+  <!-- Located at the end of link1, also z-axis rotation -->
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0.80 0 0.02" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-3.14159" upper="3.14159" effort="20" velocity="2.0"/>
+  </joint>
+
+  <!-- Fixed joint from link2 to end_effector -->
+  <joint name="ee_fixed_joint" type="fixed">
+    <parent link="link2"/>
+    <child link="end_effector"/>
+    <origin xyz="0.76 0 0.14" rpy="0 0 0"/>
+  </joint>
+
+</robot>
