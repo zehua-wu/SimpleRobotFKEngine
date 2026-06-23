@@ -12,5 +12,5 @@ dependencies:
   - matplotlib
   - pytest
   - pip:
-      - mujuco
+      - mujoco
       - meshcat
